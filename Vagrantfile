@@ -9,6 +9,7 @@ tee "/etc/profile.d/shared_vars.sh" > "/dev/null" <<EOF
 export SERVER_IP_ADDRESS="192.168.60.2"
 export VAULT_TOKEN="mylocalsupersecuretoken"
 export VAULT_VERSION="1.9.3"
+export DEBIAN_FRONTEND=noninteractive
 EOF
 SCRIPT
 
@@ -40,6 +41,7 @@ Vagrant.configure("2") do |config|
       path: "server/bootstrap.sh",
       env: {
         "NOMAD_VERSION" => "1.6.5",
+        "CONSUL_VERSION" => "1.15.2",
       }
   end
 
@@ -56,6 +58,7 @@ Vagrant.configure("2") do |config|
       env: {
         "NODE_NAME" => "alpha",
         "NOMAD_VERSION" => "1.6.5",
+        "CONSUL_VERSION" => "1.15.2",
       }
   end
   config.vm.define "beta" do |beta|
@@ -70,6 +73,7 @@ Vagrant.configure("2") do |config|
       env: {
         "NODE_NAME" => "beta",
         "NOMAD_VERSION" => "1.6.5",
+        "CONSUL_VERSION" => "1.15.2",
       }
   end
 

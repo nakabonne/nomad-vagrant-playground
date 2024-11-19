@@ -8,13 +8,17 @@ source /etc/profile.d/shared_vars.sh
 sudo apt-get update && sudo apt-get install -y unzip
 
 # Install and Run Consul
-# mkdir -p /etc/consul/services /opt/consul
-# cp "${BASE_PATH}/consul/consul.service" "/etc/systemd/system/consul.service"
-# envsubst < "${BASE_PATH}/consul/server.hcl" > /etc/consul/server.hcl
-# cp -r "${BASE_PATH}/consul/services/" "/etc/consul/"
+curl -L "https://releases.hashicorp.com/consul/${CONSUL_VERSION}/consul_${CONSUL_VERSION}_linux_amd64.zip" --fail --show-error -o /tmp/consul.zip
+unzip /tmp/consul.zip -d /tmp/ && mv /tmp/consul /usr/local/bin/
+rm /tmp/consul.zip
 
-# systemctl enable consul
-# systemctl start consul
+mkdir -p /etc/consul/services /opt/consul
+cp "${BASE_PATH}/consul/consul.service" "/etc/systemd/system/consul.service"
+envsubst < "${BASE_PATH}/consul/server.hcl" > /etc/consul/server.hcl
+#cp -r "${BASE_PATH}/consul/services/" "/etc/consul/"
+
+systemctl enable consul
+systemctl start consul
 
 # Install and Run Vault
 curl -L "https://releases.hashicorp.com/vault/${VAULT_VERSION}/vault_${VAULT_VERSION}_linux_amd64.zip" --fail --show-error -o /tmp/vault.zip
@@ -57,7 +61,7 @@ while ! nomad status; do
 done
 
 # Start all Nomad jobs
-nomadjobs="${BASE_PATH}/nomadjobs/*.nomad"
-for job in ${nomadjobs}; do
-  nomad run "${job}"
-done
+# nomadjobs="${BASE_PATH}/nomadjobs/*.nomad"
+# for job in ${nomadjobs}; do
+#   nomad run "${job}"
+# done
