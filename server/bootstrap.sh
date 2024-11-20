@@ -46,6 +46,8 @@ mkdir -p /etc/nomad /opt/nomad
 cp "${BASE_PATH}/nomad/nomad.service" "/etc/systemd/system/nomad.service"
 envsubst < "${BASE_PATH}/nomad/server.hcl" > /etc/nomad/server.hcl
 
+echo Start nomad server
+
 systemctl enable nomad
 systemctl start nomad
 
