@@ -63,7 +63,7 @@ while ! nomad status; do
 done
 
 # Start all Nomad jobs
-# nomadjobs="${BASE_PATH}/nomadjobs/*.nomad"
-# for job in ${nomadjobs}; do
-#   nomad run "${job}"
-# done
+nomadjobs="${BASE_PATH}/nomadjobs/*.nomad"
+for job in ${nomadjobs}; do
+  nomad run "${job}"
+done
