@@ -23,23 +23,20 @@ job "netreap" {
     task "netreap" {
       driver = "docker"
 
-      env {
-        NETREAP_CILIUM_CIDR = "172.16.0.0/16"
-      }
-
       config {
-        image        = "ghcr.io/cosmonic/netreap:0.1.0"
+        image        = "ghcr.io/cosmonic/netreap:0.2.0"
         network_mode = "host"
 
         # You must be able to mount volumes from the host system so that
         # Netreap can use the Cilium API over a Unix socket.
         # See
-        # https://developer.hashicorp.com/nomad/docs/drivers/docker#volumes-1
+        # https://developer.hashicorp.com/nomad/docs/drivers/docker#plugin-options
         # for more information.
         volumes = [
           "/var/run/cilium:/var/run/cilium"
         ]
       }
+
     }
   }
 }

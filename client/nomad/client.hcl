@@ -2,7 +2,8 @@ name = "${NODE_NAME}"
 data_dir = "/opt/nomad"
 datacenter = "dc-${NODE_NAME}"
 
-bind_addr = "{{ GetInterfaceIP \"eth1\" }}"
+# Netreap needs Nomad to listen on 0.0.0.0
+#bind_addr = "{{ GetInterfaceIP \"eth1\" }}"
 
 advertise {
   http = "{{ GetInterfaceIP \"eth1\" }}"
@@ -15,6 +16,8 @@ client {
   enabled = true
   network_interface = "eth1"
   node_class = "${NODE_NAME}"
+  cni_config_dir = "/opt/cni/conf.d"
+  cni_path = "opt/cni/bin"
   gc_interval = "24h"
 }
 

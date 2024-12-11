@@ -23,3 +23,16 @@ else
 	@echo "Unsupported OS, please copy your local nomad binary manually to ./bin/nomad"
 	@exit 1
 endif
+
+./bin/consul:
+	@mkdir -p bin
+ifeq ($(UNAME), Linux)
+	cd bin && curl -o consul.zip https://releases.hashicorp.com/consul/1.15.2/consul_1.15.2_linux_amd64.zip && unzip consul.zip && rm consul.zip
+	@chmod +x ./bin/consul
+else ifeq ($(UNAME), Darwin)
+	cd bin && curl -o consul.zip https://releases.hashicorp.com/consul/1.15.2/consul_1.15.2_darwin_amd64.zip && unzip consul.zip && rm consul.zip
+	@chmod +x ./bin/consul
+else
+	@echo "Unsupported OS, please copy your local consul binary manually to ./bin/consul"
+	@exit 1
+endif
